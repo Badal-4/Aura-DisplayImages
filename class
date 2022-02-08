@@ -1,0 +1,13 @@
+public class TestCtrl {
+
+    @AuraEnabled
+    public static List<ContentVersion> getContents() {
+        Set<Id> contentIds = new Set<Id>();
+
+        for (ContentDocument cont :[Select Id ,Title from ContentDocument]) {
+            contentIds.add(cont.Id);
+        }
+
+        return [SELECT Id,Title FROM ContentVersion WHERE ContentDocumentId IN :contentIds];
+    }
+}
